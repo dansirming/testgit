@@ -1,0 +1,79 @@
+步骤如下：
+  # cmakelists.txt文件的编写
+
+
+  
+
+cmakelists.txt 主要功能就是加载vaas-core库的头文件和库。有两中方法加载，如下：
+
+
+  - 通过在本机～/.profile中设置环境变量
+    
+     **vim ～/.profile**
+     
+    在打开的文件中加入如下两个代码：
+
+    **export CMAKE_INCLUDE_PATH=VAAS-CORE-INCLUDE**
+
+   **export CMAKE_INCLUDE_LIBRARY=VAAS-CORE-LIB**
+
+      其中VAAS-CORE-INCLUDE是你的vass-core安装时，头文件存放目录的绝对路径，VAAS-CORE-LIB是你的vass-core安装时，库文件存放目录的绝对路径。
+
+      之后重启电脑即可。对应的cmakelists.txt部分如下：
+       
+  
+
+```
+                              find_path(VAAS_CORE_HEADER vaas/core/vaas-core.h)
+                              message(STATUS "VAAS_CORE_HEADER:   "  ${VAAS_CORE_HEADER})
+                              if(VAAS_CORE_HEADER)
+                              include_directories(${VAAS_CORE_HEADER})
+                              else(VAAS_CORE_HEADER)
+                              message(STATUS "can not find core path")
+                              endif(VAAS_CORE_HEADER)
+
+
+```
+
+
+
+  - 通过引入外部.cmake文件方式
+    在外部某个目录，定义一个cmake 文件，在该文件中根据本机的配置环境，配置vaas-core库的头文件和库文件的路径即可，如下我基于我本机的cmake配置：
+
+```
+#以下目录，请根据个人本机路径的不同进行设置
+#包含protobuf目录
+include_directories("/usr/local/protobuf/include" /home/dansir/work/mygit/workcode/vaas-core-lib-include/vaas-core/include)
+#vaas-core.so所在目录
+link_directories(/home/dansir/work/mygit/workcode/vaas-core-lib-include/vaas-core/lib)
+link_libraries(vaas-core)
+link_libraries(vaas-main)
+```
+ 
+  
+
+
+
+
+
+     
+     
+
+  ## 3333
+
+
+
+
+
+
+
+
+   
+
+
+
+
+
+
+
+
